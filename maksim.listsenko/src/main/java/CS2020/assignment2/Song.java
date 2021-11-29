@@ -2,12 +2,23 @@ package CS2020.assignment2;
 
 import java.util.UUID;
 
-public class Artist {
+import CS2020.assignment2.Artist;
+
+public class Song {
     private UUID songID;
     private UUID artistID;
     private String title;
     private int duration;
 
+    // Constructor
+    public Song(Artist artist, String title, int duration) {
+        this.songID = UUID.randomUUID();
+        this.artistID = artist.getArtistID();
+        this.title = title;
+        this.duration = duration;
+    }
+
+    // Getter and setter methods
     public UUID getSongID() {
         return songID;
     }

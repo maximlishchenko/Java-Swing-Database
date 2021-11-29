@@ -11,10 +11,16 @@ public class Artist {
     private String placeOfBirth;
     private ArrayList<Song> songs = new ArrayList<Song>;
 
-    public Artist {
+    // Constructor
+    public Artist(String firstName, String lastName, String dob, String placeOfBirth) {
         this.artistID = UUID.randomUUID();
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dob = dob;
+        this.placeOfBirth = placeOfBirth;
     }
 
+    // Getter and setter methods
     public UUID getArtistID() {
         return artistID;
     }
@@ -61,5 +67,10 @@ public class Artist {
 
     public void setSongs(ArrayList<Song> songs) {
         this.songs = songs;
+    }
+
+    //Other methods
+    public void addSong(Song song) {
+        this.songs.add(song);
     }
 }
