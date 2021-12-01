@@ -15,7 +15,7 @@ import CS2020.assignment2.Song;
 public class Utils {
 
     public static HashMap<UUID, String> returnSongDurationAndTitleFormatted(ArrayList<Song> songs) {
-        HashMap<UUID, String> myMap = new HashMap<UUID, String>;
+        HashMap<UUID, String> myMap = new HashMap<UUID, String>();
         for (Song song : songs) {
             UUID key = song.getSongID();
             int minutes = Math.floor(duration / 60);

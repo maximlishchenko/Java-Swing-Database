@@ -14,8 +14,8 @@ public class Song {
     public Song(Artist artist, String title, int duration) {
         this.songID = UUID.randomUUID();
         this.artistID = artist.getArtistID();
-        this.title = title;
-        this.duration = duration;
+        setTitle(title);
+        setDuration(duration);
     }
 
     // Getter and setter methods

@@ -9,15 +9,15 @@ public class Artist {
     private String lastName;
     private String dob;
     private String placeOfBirth;
-    private ArrayList<Song> songs = new ArrayList<Song>;
+    private ArrayList<Song> songs = new ArrayList<Song>();
 
     // Constructor
     public Artist(String firstName, String lastName, String dob, String placeOfBirth) {
         this.artistID = UUID.randomUUID();
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.dob = dob;
-        this.placeOfBirth = placeOfBirth;
+        setFirstName(firstName);
+        setLastName(lastName);
+        setDob(dob);
+        setPlaceOfBirth(placeOfBirth);
     }
 
     // Getter and setter methods
