@@ -2,7 +2,7 @@ package CS2020.assignment2;
 
 import java.util.UUID;
 
-import CS2020.assignment2.Artist;
+//import CS2020.assignment2.Artist;
 
 public class Song {
     private UUID songID;

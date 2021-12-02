@@ -2,15 +2,18 @@ package CS2020.assignment2;
 
 import java.util.Map;
 import java.util.HashMap;
-import.java.util.ArrayList;
+import java.util.ArrayList;
 import java.util.UUID;
 import Math.floor;
 import java.time.LocalDate;
 import java.time.DayOfWeek;
 import javax.swing*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 
-import CS2020.assignment2.Artist;
-import CS2020.assignment2.Song;
+//import CS2020.assignment2.Artist;
+//import CS2020.assignment2.Song;
 
 public class Utils {
 
@@ -52,5 +55,43 @@ public class Utils {
         listModel.addElement(artist1);
         listModel.addElement(artist2);
         list.setModel(listModel);
+    }
+
+
+    public static void connectToDatabase() {
+        Connection conn = null;
+        try {
+            String url = "jdbc:sqlite:home/codio/workspace/CS2020_CA2/maksim.listsenko/resources/CS2020-assignment2.db";
+            conn = DriverManager.getConnection(url);
+            System.out.println("Connection to SQLite has been established.");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return conn;
+//         finally {
+//             try {
+//                 if (conn != null) {
+//                     conn.close();
+//                 }
+//             } catch (SQLException ex) {
+//                 System.out.println(ex.getMessage());
+//             }
+//         }
+    }
+
+
+    public static void readArtistAndSongsFromDatabase(JList<Artist> list) {
+        listModel = list.getModel();
+        String sql = "SELECT * FROM Artist";
+        try (Connection conn = connectToDatabase();
+        Statement stmt = conn.createStatement();
+        ResultSet rs = stmt.executeQuery(sql)) {
+            while (rs.next()) {
+                Artist artist = new Artist(rs.getObject("artistID"), )
+            }
+        }
+        conn.close();
+    } catch (SQLException e) {
+        System.out.println(e.getMessage());
     }
 }
