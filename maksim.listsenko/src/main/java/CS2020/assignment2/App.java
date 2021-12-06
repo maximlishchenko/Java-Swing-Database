@@ -23,6 +23,8 @@ public class App {
         frame.add(menuBar, BorderLayout.NORTH);
 
         JList<Artist> list = new JList<Artist>();
+        DefaultListModel listModel = new DefaultListModel();
+        list.setModel(listModel);
         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         JScrollPane listPane = new JScrollPane(list);
         listPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -32,10 +34,17 @@ public class App {
         JButton button1 = new JButton("Add Data Manually");
         button1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //createExampleArtists(list);
+                Utils.createExampleArtists(list);
+                button1.setEnabled(false);
             }
         });
         JButton button2 = new JButton("Add Data From Database");
+        button2.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                Utils.readArtistAndSongsFromDatabase(list);
+                button2.setEnabled(false);
+            }
+        });
         JButton button3 = new JButton("Delete Selected");
         southPanel.add(button1);
         southPanel.add(button2);
@@ -71,6 +80,7 @@ public class App {
 
     public static void main(String[] args) {
         createAndShowGUI();
-        connectToDatabase();
+        //Utils utils = new Utils();
+        Utils.connectToDatabase();
     }
 }
