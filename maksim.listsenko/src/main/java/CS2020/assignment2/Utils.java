@@ -10,13 +10,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.DayOfWeek;
 import javax.swing.*;
-// import java.sql.Connection;
-// import java.sql.DriverManager;
-// import java.sql.SQLException;
 import java.sql.*;
-
-//import CS2020.assignment2.Artist;
-//import CS2020.assignment2.Song;
 
 public class Utils {
 
@@ -27,7 +21,6 @@ public class Utils {
             int duration = (int) song.getDuration();
             int minutes = (int) Math.floor(duration / 60);
             int seconds = (int) duration % 60;
-            //String value = song.getTitle() + " (" + minutes.toString() + ":" + seconds.toString() + ")";
             String value = song.getTitle() + " (" + String.valueOf(minutes) + ":" + String.valueOf(seconds) + ")";
             myMap.put(key, value);
         }
@@ -57,34 +50,10 @@ public class Utils {
         artist2.setSongs(songs2);
 
         DefaultListModel listModel = (DefaultListModel) list.getModel();
-        //String name1 = artist1.getFirstName() + " " + artist1.getLastName();
         listModel.addElement(artist1);
-        //String name2 = artist2.getFirstName() + " " + artist2.getLastName();
         listModel.addElement(artist2);
         list.setModel(listModel);
     }
-
-
-//     public static void connectToDatabase() {
-//         Connection conn = null;
-//         try {
-//             String url = "jdbc:sqlite:home/codio/workspace/CS2020_CA2/maksim.listsenko/resources/CS2020-assignment2.db";
-//             conn = DriverManager.getConnection(url);
-//             System.out.println("Connection to SQLite has been established.");
-//         } catch (SQLException e) {
-//             System.out.println(e.getMessage());
-//         }
-//         return conn;
-//         finally {
-//             try {
-//                 if (conn != null) {
-//                     conn.close();
-//                 }
-//             } catch (SQLException ex) {
-//                 System.out.println(ex.getMessage());
-//             }
-//         }
-//     }
 
 
     public static Connection connectToDatabase() {
@@ -101,10 +70,12 @@ public class Utils {
 
     public static void readArtistAndSongsFromDatabase(JList<Artist> list) {
         DefaultListModel listModel = (DefaultListModel) list.getModel();
-        String sql = "SELECT * FROM Artist";
+        String sql = "SELECT * FROM Song, Artist WHERE Song.artistID = Artist.artistID";
         try (Connection conn = connectToDatabase();
         Statement stmt = conn.createStatement();
         ResultSet rs = stmt.executeQuery(sql)) {
+            ArrayList<Artist> artists = new ArrayList<Artist>();
+            ArrayList<Song> songs = new ArrayList<Song>();
             while (rs.next()) {
                 String fullName = rs.getString("name");
                 String[] split = fullName.split(" ");
@@ -112,43 +83,26 @@ public class Utils {
                 String stringArtistID = rs.getString("artistID");
                 UUID artistID = UUID.fromString(stringArtistID);
                 artist.setArtistID(artistID);
-//                 ArrayList<Song> songs = artist.getSongs();
-//                 String sql2 = "SELECT * FROM Song WHERE Song.artistID = Artist." + stringArtistID;
-//                 Statement stmt2 = conn.createStatement();
-//                 ResultSet rs2 = stmt.executeQuery(sql2);
-//                 while (rs2.next()) {
-//                     Song song = new Song(artist, rs2.getString("title"), (int) rs2.getObject("duration"));
-//                     String stringSongID = rs2.getString("songID");
-//                     UUID songID = UUID.fromString(stringSongID);
-//                     song.setSongID(songID);
-//                     songs.add(song);
-//                 }
-//                 artist.setSongs(songs);
-                listModel.addElement(artist);
+                boolean alreadyInArray = false;
+                //Prevents adding duplicate artists
+                for (Artist item : artists) {
+                    if (String.valueOf(item.getArtistID()).equals(String.valueOf(artist.getArtistID()))) {
+                        alreadyInArray = true;
+                    }
+                }
+                if (!alreadyInArray) {
+                    artists.add(artist);
+                }
+                Song song = new Song(artist, rs.getString("title").replaceAll("[\\n\\t]", ""), (int) rs.getObject("duration"));
+                songs.add(song);
             }
-            String sql2 = "SELECT * FROM Song";
-            Statement stmt2 = conn.createStatement();
-            ResultSet rs2 = stmt2.executeQuery(sql);
-            ArrayList<Artist> artistArray = new ArrayList<Artist>();
-            for (int i = 0; i < listModel.getSize(); i++) {
-                Artist artist = (Artist) listModel.getElementAt(i);
-                artistArray.add(artist);
-            }
-            for (Artist artist : artistArray) {
-                ArrayList<Song> songs = artist.getSongs();
-                while (rs2.next()) {
-                    String stringArtistID = rs2.getString("artistID");
-                    UUID artistID = UUID.fromString(stringArtistID);
-                    if (artist.getArtistID() == artistID) {
-                        Song song = new Song(artist, rs2.getString("title"), (int) rs2.getObject("duration"));
-                        String stringSongID = rs2.getString("songID");
-                        stringSongID = stringSongID.replaceAll("[\\n\\t ]", "");
-                        UUID songID = UUID.fromString(stringSongID);
-                        song.setSongID(songID);
+            for (Artist artist : artists) {
+                for (Song song : songs) {
+                    if (String.valueOf(song.getArtistID()).equals(String.valueOf(artist.getArtistID()))) {
                         artist.addSong(song);
                     }
                 }
-                //artist.setSongs(songs);
+                listModel.addElement(artist);
             }
             list.setModel(listModel);
             conn.close();

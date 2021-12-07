@@ -129,10 +129,12 @@ public class App {
                         bornOnWeekendTextField.setText("no");
                     }
                     textArea.setText("");
-                    //Map<UUID, String> map = Utils.returnSongDurationAndTitleFormatted(selectedArtist.getSongs());
                     List<String> songs = new ArrayList<String>(Utils.returnSongDurationAndTitleFormatted(selectedArtist.getSongs()).values());
-                    for (String song : songs) {
-                        textArea.append(song);
+//                     for (String song : songs) {
+//                         textArea.append(song);
+//                     }
+                    for (int i = 0; i < songs.size(); i++) {
+                        textArea.append(Integer.toString(i + 1) + ". " + songs.get(i) + "\n");
                     }
                 }
             }

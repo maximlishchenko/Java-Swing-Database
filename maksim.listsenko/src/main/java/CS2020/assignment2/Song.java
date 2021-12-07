@@ -10,10 +10,17 @@ public class Song {
     private String title;
     private int duration;
 
-    // Constructor
+    // Constructors
     public Song(Artist artist, String title, int duration) {
         this.songID = UUID.randomUUID();
         this.artistID = artist.getArtistID();
+        setTitle(title);
+        setDuration(duration);
+    }
+
+    public Song(UUID songID, UUID artistID, String title, int duration) {
+        setSongID(songID);
+        setArtistID(artistID);
         setTitle(title);
         setDuration(duration);
     }
