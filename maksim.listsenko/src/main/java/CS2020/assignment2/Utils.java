@@ -36,7 +36,7 @@ public class Utils {
 
 
     public static boolean checkIfBornOnWeekend(String dob) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMM yyyy");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d MMM yyyy");
         LocalDate date = LocalDate.parse(dob, formatter);
         DayOfWeek dayOfWeek = date.getDayOfWeek();
         return (dayOfWeek == DayOfWeek.SATURDAY || dayOfWeek == DayOfWeek.SUNDAY);
@@ -56,14 +56,11 @@ public class Utils {
         songs2.add(new Song(artist2, "Don't Start Now", 183));
         artist2.setSongs(songs2);
 
-//         DefaultListModel listModel = new DefaultListModel();
-//         listModel.addElement(artist1);
-//         listModel.addElement(artist2);
         DefaultListModel listModel = (DefaultListModel) list.getModel();
-        String name1 = artist1.getFirstName() + " " + artist1.getLastName();
-        listModel.addElement(name1);
-        String name2 = artist2.getFirstName() + " " + artist2.getLastName();
-        listModel.addElement(name2);
+        //String name1 = artist1.getFirstName() + " " + artist1.getLastName();
+        listModel.addElement(artist1);
+        //String name2 = artist2.getFirstName() + " " + artist2.getLastName();
+        listModel.addElement(artist2);
         list.setModel(listModel);
     }
 
@@ -107,7 +104,7 @@ public class Utils {
         String sql = "SELECT * FROM Artist";
         try (Connection conn = connectToDatabase();
         Statement stmt = conn.createStatement();
-        ResultSet rs = stmt.executeQuery(sql)){
+        ResultSet rs = stmt.executeQuery(sql)) {
             while (rs.next()) {
                 String fullName = rs.getString("name");
                 String[] split = fullName.split(" ");
@@ -134,7 +131,7 @@ public class Utils {
             ResultSet rs2 = stmt2.executeQuery(sql);
             ArrayList<Artist> artistArray = new ArrayList<Artist>();
             for (int i = 0; i < listModel.getSize(); i++) {
-                Artist artist =  (Artist) listModel.getElementAt(i);
+                Artist artist = (Artist) listModel.getElementAt(i);
                 artistArray.add(artist);
             }
             for (Artist artist : artistArray) {
@@ -145,12 +142,13 @@ public class Utils {
                     if (artist.getArtistID() == artistID) {
                         Song song = new Song(artist, rs2.getString("title"), (int) rs2.getObject("duration"));
                         String stringSongID = rs2.getString("songID");
+                        stringSongID = stringSongID.replaceAll("[\\n\\t ]", "");
                         UUID songID = UUID.fromString(stringSongID);
                         song.setSongID(songID);
-                        songs.add(song);
+                        artist.addSong(song);
                     }
                 }
-                artist.setSongs(songs);
+                //artist.setSongs(songs);
             }
             list.setModel(listModel);
             conn.close();
