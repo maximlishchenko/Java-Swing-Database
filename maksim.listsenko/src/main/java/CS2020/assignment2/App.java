@@ -42,24 +42,35 @@ public class App {
         frame.add(listPane, BorderLayout.CENTER);
 
         JPanel southPanel = new JPanel();
-        JButton button1 = new JButton("Add Data Manually");
-        button1.addActionListener(new ActionListener() {
+        JButton addDataButton = new JButton("Add Data Manually");
+        addDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Utils.createExampleArtists(list);
-                button1.setEnabled(false);
+                addDataButton.setEnabled(false);
             }
         });
-        JButton button2 = new JButton("Add Data From Database");
-        button2.addActionListener(new ActionListener() {
+        JButton addDatabaseDataButton = new JButton("Add Data From Database");
+        addDatabaseDataButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Utils.readArtistAndSongsFromDatabase(list);
-                button2.setEnabled(false);
+                addDatabaseDataButton.setEnabled(false);
             }
         });
-        JButton button3 = new JButton("Delete Selected");
-        southPanel.add(button1);
-        southPanel.add(button2);
-        southPanel.add(button3);
+        JButton deleteButton = new JButton("Delete Selected");
+        deleteButton.setEnabled(false);
+        deleteButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                DefaultListModel lm = (DefaultListModel) list.getModel();
+                Artist artistToBeDeleted = (Artist) lm.getElementAt(list.getSelectedIndex());
+                System.out.println(artistToBeDeleted);
+                System.out.println(list.getSelectedIndex());
+                lm.removeElement(artistToBeDeleted);
+                System.out.println("zxc");
+            }
+        });
+        southPanel.add(addDataButton);
+        southPanel.add(addDatabaseDataButton);
+        southPanel.add(deleteButton);
         frame.add(southPanel, BorderLayout.SOUTH);
 
         JPanel eastPanel = new JPanel();
@@ -120,6 +131,7 @@ public class App {
             @Override
             public void valueChanged(ListSelectionEvent e) {
                 if (!e.getValueIsAdjusting()) {
+                    deleteButton.setEnabled(true);
                     Artist selectedArtist = list.getModel().getElementAt(list.getSelectedIndex());
                     dobTextField.setText(selectedArtist.getDob());
                     placeOfBirthTextField.setText(selectedArtist.getPlaceOfBirth());
@@ -130,9 +142,6 @@ public class App {
                     }
                     textArea.setText("");
                     List<String> songs = new ArrayList<String>(Utils.returnSongDurationAndTitleFormatted(selectedArtist.getSongs()).values());
-//                     for (String song : songs) {
-//                         textArea.append(song);
-//                     }
                     for (int i = 0; i < songs.size(); i++) {
                         textArea.append(Integer.toString(i + 1) + ". " + songs.get(i) + "\n");
                     }
@@ -147,7 +156,5 @@ public class App {
 
     public static void main(String[] args) {
         createAndShowGUI();
-        //Utils utils = new Utils();
-        //Utils.connectToDatabase();
     }
 }
