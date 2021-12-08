@@ -5,13 +5,22 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 public class App {
 
     private static void createAndShowGUI() {
         JFrame frame = new JFrame("Maksim Listsenko: Assignment 2");
         frame.setLayout(new BorderLayout());
+
+        JList<Artist> list = new JList<Artist>();
+        DefaultListModel listModel = new DefaultListModel();
+        list.setModel(listModel);
+        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
 
         JMenuBar menuBar = new JMenuBar();
         JMenuItem about = new JMenuItem("About");
@@ -22,20 +31,46 @@ public class App {
             }
         });
         menuBar.add(about);
+        JMenuItem csv = new JMenuItem("Export to CSV");
+        csv.setMaximumSize(new Dimension(csv.getPreferredSize().width, 50));
+        csv.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    File artists = new File("resources/artists.csv");
+                    File songs = new File("resources/songs.csv");
+                    FileWriter writer1 = new FileWriter("resources/artists.csv");
+                    FileWriter writer2 = new FileWriter("resources/songs.csv");
+                    writer1.write("artistID,dob,placeOfBirth\n");
+                    writer2.write("songID,artistID,title,duration\n");
+                    ArrayList<Artist> artistList = new ArrayList<Artist>();
+                    for (int i = 0; i < list.getModel().getSize(); i++) {
+                        artistList.add(list.getModel().getElementAt(i));
+                    }
+                    for (Artist artist : artistList) {
+                        String artistData = artist.getArtistID().toString() + "," + artist.getDob() +
+                            "," + artist.getPlaceOfBirth() + "\n";
+                        writer1.write(artistData);
+                        for (Song song : artist.getSongs()) {
+                            String songData = song.getSongID().toString() + "," + song.getArtistID().toString() + "," +
+                                song.getTitle() + "," + String.valueOf(song.getDuration()) + "\n";
+                            writer2.write(songData);
+                        }
+                    }
+                    writer1.close();
+                    writer2.close();
+                } catch (IOException err) {
+                    err.printStackTrace();
+                }
+                JOptionPane.showMessageDialog(null, "Export completed", "CSV Export", JOptionPane.PLAIN_MESSAGE);
+            }
+        });
+        menuBar.add(csv);
         frame.add(menuBar, BorderLayout.NORTH);
 
-        JList<Artist> list = new JList<Artist>();
-        DefaultListModel listModel = new DefaultListModel();
-        list.setModel(listModel);
-        list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
-//         list.addListSelectionListener(new ListSelectionListener() {
-//             @Override
-//             public void valueChanged(ListSelectionEvent e) {
-//                 if (!e.getValueIsAdjusting()) {
-//                     textArea.append(list.getModel().getElementAt(list.getSelectedIndex()));
-//                 }
-//             }
-//         });
+//         JList<Artist> list = new JList<Artist>();
+//         DefaultListModel listModel = new DefaultListModel();
+//         list.setModel(listModel);
+//         list.setSelectionMode(ListSelectionModel.SINGLE_INTERVAL_SELECTION);
         
         JScrollPane listPane = new JScrollPane(list);
         listPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -62,10 +97,10 @@ public class App {
             public void actionPerformed(ActionEvent e) {
                 DefaultListModel lm = (DefaultListModel) list.getModel();
                 Artist artistToBeDeleted = (Artist) lm.getElementAt(list.getSelectedIndex());
-                System.out.println(artistToBeDeleted);
                 System.out.println(list.getSelectedIndex());
-                lm.removeElement(artistToBeDeleted);
-                System.out.println("zxc");
+                System.out.println(artistToBeDeleted);
+                System.out.println(lm);
+                lm.remove(list.getSelectedIndex());
             }
         });
         southPanel.add(addDataButton);

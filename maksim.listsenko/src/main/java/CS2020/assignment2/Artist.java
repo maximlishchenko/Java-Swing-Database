@@ -74,8 +74,8 @@ public class Artist {
         this.songs.add(song);
     }
 
-//     @Override
-//     public String toString() {
-//         return firstName + " " + lastName;
-//     }
+    @Override
+    public String toString() {
+        return firstName + " " + lastName;
+    }
 }
