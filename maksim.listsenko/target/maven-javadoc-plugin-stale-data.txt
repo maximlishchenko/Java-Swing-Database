@@ -1,0 +1,51 @@
+@options
+@packages
+--class-path
+'/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/classes:/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/test-classes:/home/codio/.m2/repository/junit/junit/4.11/junit-4.11.jar:/home/codio/.m2/repository/org/hamcrest/hamcrest-core/1.3/hamcrest-core-1.3.jar:/home/codio/.m2/repository/org/xerial/sqlite-jdbc/3.15.1/sqlite-jdbc-3.15.1.jar'
+-encoding
+'UTF-8'
+-protected
+-source
+'11'
+-sourcepath
+'/home/codio/workspace/CS2020_CA2/maksim.listsenko/src/test/java'
+-author
+-bottom
+'Copyright &#169; 2021. All rights reserved.'
+-charset
+'UTF-8'
+-d
+'/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'maksim.listsenko 1.0-SNAPSHOT Test API'
+-link
+'../apidocs'
+-linkoffline
+'https://docs.oracle.com/en/java/javase/11/docs/api' '/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/javadoc-bundle-options'
+-use
+-version
+-windowtitle
+'maksim.listsenko 1.0-SNAPSHOT Test API'
+CS2020.assignment2
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/src/test/java = 1638134784772
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/element-list = 1639093802518
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/constant-values.html = 1639093802530
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/overview-tree.html = 1639093802542
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/package-search-index.js = 1639093802546
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/package-search-index.zip = 1639093802546
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/type-search-index.js = 1639093802546
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/type-search-index.zip = 1639093802550
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/member-search-index.js = 1639093802550
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/member-search-index.zip = 1639093802550
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/index-all.html = 1639093802550
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/allclasses-index.html = 1639093802554
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/allpackages-index.html = 1639093802554
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/deprecated-list.html = 1639093802558
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/allclasses.html = 1639093802558
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/index.html = 1639093802558
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/help-doc.html = 1639093802562
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/stylesheet.css = 1639093802562
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/script.js = 1639093802562
+/home/codio/workspace/CS2020_CA2/maksim.listsenko/target/site/testapidocs/search.js = 1639093802566
